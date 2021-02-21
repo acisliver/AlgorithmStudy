@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// https://programmers.co.kr/learn/courses/30/lessons/60057
 class StringCompression {
 
     public int solution(String s) {
