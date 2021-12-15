@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class Solution {
+class StringCompression {
 
     public int solution(String s) {
         int answer = 0;
@@ -12,7 +12,8 @@ class Solution {
 
         List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < s.length(); i++) {
+        int subLen = s.length() / 2;
+        for (int i = 2; i < subLen; i++) {
 
             // i개로 s 자르기
             int j;
@@ -41,7 +42,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution s = new Solution();
+        StringCompression s = new StringCompression();
         s.solution("abababdede");
     }
 }

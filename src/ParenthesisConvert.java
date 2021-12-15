@@ -12,21 +12,36 @@ public class ParenthesisConvert {
 
         StringBuilder answer = new StringBuilder();
 
+        // 균형잡힌 문자열로 나눔
         String u = p.substring(0, getUIndex(p));
         String v = p.substring(getUIndex(p));
 
+        // u가 올바른 문자열인가?
+        // v에 대해 getUIndex 재귀적으로 적용
         if (isRight(u)) {
             u = v.substring(0, getUIndex(v));
             v = v.substring(getUIndex(v));
         }
 
-        while(v.length() != 0){
+        return u;
+    }
 
-            u = u.substring(0, getUIndex(u));
-            v = u.substring(getUIndex(u));
+    // 재귀적으로 문자열 나누기
+    public String[] recursive(String p) {
+        // 균형잡힌 문자열로 나눔
+        String u = p.substring(0, getUIndex(p));
+        String v = p.substring(getUIndex(p));
+
+        // u가 올바른 문자열인가?
+        // 올바른 문자열이면 v에 대해 재귀적으로 recursive() 실행
+        if(isRight(u)) {
+            recursive(v);
+        }
+        else {
+            String rightString = makeRight(u, v);
         }
 
-        return u;
+        return new String[] {u, v};
     }
 
 
@@ -55,7 +70,6 @@ public class ParenthesisConvert {
 
         Stack<String> stack = new Stack<>();
 
-
         while(!queue.isEmpty()) {
             if (queue.peek().equals("("))
                 stack.push(queue.poll());
@@ -67,5 +81,20 @@ public class ParenthesisConvert {
         }
         return true;
 
+    }
+
+    // 균형잡힌 문자열을 올바른 문자열로 변환
+    public static String makeRight(String u, String v) {
+
+        // 처음과 마지막 괄호 제거
+        String[] newU = u.substring(1, u.length() - 1).split("");
+
+        // 괄호 반전
+        for (int i = 0; i < newU.length; i++) {
+            if (newU[i] == "(") newU[i] = ")";
+            newU[i] = "(";
+        }
+
+        return "(" + v + ")" + String.join("", newU);
     }
 }
