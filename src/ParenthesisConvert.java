@@ -10,34 +10,62 @@ public class ParenthesisConvert {
 
         if (p.length() == 0) return p;
 
-        String u = getU(p);
+        StringBuilder answer = new StringBuilder();
 
-        if (u.length() == p.length()) return u;
+        String u = p.substring(0, getUIndex(p));
+        String v = p.substring(getUIndex(p));
 
-        String v = p.substring(u.length());
-        u = getU(v);
+        if (isRight(u)) {
+            u = v.substring(0, getUIndex(v));
+            v = v.substring(getUIndex(v));
+        }
+
+        while(v.length() != 0){
+
+            u = u.substring(0, getUIndex(u));
+            v = u.substring(getUIndex(u));
+        }
 
         return u;
     }
 
-    public static String getU(String p) {
 
-        Queue<String> queue = new LinkedList<>(Arrays.asList(p.split("")));
+    // 균형잡힌 문자열로 변환
+    public static int getUIndex(String p) {
+
+        int open = 0;
+        int close = 0;
+        int idx = 0;
+
+        for (String s : p.split("")) {
+            idx++;
+            if (s.equals("(")) open++;
+            else close++;
+            if (open == close)
+                return idx;
+        }
+
+        return 0;
+    }
+
+    // 올바른 문자열인지 확인
+    public static boolean isRight(String u) {
+
+        Queue<String> queue = new LinkedList<>(Arrays.asList(u.split("")));
 
         Stack<String> stack = new Stack<>();
 
-        Queue<String> u = new LinkedList<>();
 
         while(!queue.isEmpty()) {
             if (queue.peek().equals("("))
                 stack.push(queue.poll());
             else {
-                if (stack.isEmpty()) return String.join("", u);
-                u.add(stack.pop());
-                u.add(queue.poll());
+                if (stack.isEmpty()) return false;
+                stack.pop();
+                queue.poll();
             }
         }
-        return String.join("", u);
+        return true;
 
     }
 }
