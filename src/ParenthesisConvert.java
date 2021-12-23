@@ -6,11 +6,23 @@ public class ParenthesisConvert {
         System.out.println(solution("()))((()"));
     }
 
+    public static StringBuilder answer;
+
     public static String solution(String p) {
 
         if (p.length() == 0) return p;
 
-        StringBuilder answer = new StringBuilder();
+        answer = new StringBuilder();
+
+        recursive(p);
+
+        return answer.toString();
+    }
+
+    // 재귀적으로 문자열 나누기
+    public static String recursive(String p) {
+
+        if (p.length() == 0) return p;
 
         // 균형잡힌 문자열로 나눔
         String u = p.substring(0, getUIndex(p));
@@ -18,30 +30,19 @@ public class ParenthesisConvert {
 
         // u가 올바른 문자열인가?
         // v에 대해 getUIndex 재귀적으로 적용
-        if (isRight(u)) {
-            u = v.substring(0, getUIndex(v));
-            v = v.substring(getUIndex(v));
-        }
+        do {
+            if (isRight(u)) {
+                answer.append(u);
+                u = v.substring(0, getUIndex(v));
+                v = v.substring(getUIndex(v));
+            }
+            else {
+                v = recursive(v);
+                u = makeRight(u, v);
+            }
+        } while(v.length() != 0);
 
-        return u;
-    }
-
-    // 재귀적으로 문자열 나누기
-    public String[] recursive(String p) {
-        // 균형잡힌 문자열로 나눔
-        String u = p.substring(0, getUIndex(p));
-        String v = p.substring(getUIndex(p));
-
-        // u가 올바른 문자열인가?
-        // 올바른 문자열이면 v에 대해 재귀적으로 recursive() 실행
-        if(isRight(u)) {
-            recursive(v);
-        }
-        else {
-            String rightString = makeRight(u, v);
-        }
-
-        return new String[] {u, v};
+        return  u;
     }
 
 
@@ -91,8 +92,8 @@ public class ParenthesisConvert {
 
         // 괄호 반전
         for (int i = 0; i < newU.length; i++) {
-            if (newU[i] == "(") newU[i] = ")";
-            newU[i] = "(";
+            if (newU[i].equals("(")) newU[i] = ")";
+            else if(newU[i].equals(")")) newU[i] = "(";
         }
 
         return "(" + v + ")" + String.join("", newU);
