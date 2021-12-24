@@ -2,21 +2,15 @@ import java.util.*;
 
 public class ParenthesisConvert {
     public static void main(String[] args) {
-
         System.out.println(solution("()))((()"));
     }
 
-    public static StringBuilder answer;
 
     public static String solution(String p) {
 
         if (p.length() == 0) return p;
 
-        answer = new StringBuilder();
-
-        recursive(p);
-
-        return answer.toString();
+        return recursive(p);
     }
 
     // 재귀적으로 문자열 나누기
@@ -30,23 +24,17 @@ public class ParenthesisConvert {
 
         // u가 올바른 문자열인가?
         // v에 대해 getUIndex 재귀적으로 적용
-        do {
-            if (isRight(u)) {
-                answer.append(u);
-                u = v.substring(0, getUIndex(v));
-                v = v.substring(getUIndex(v));
-            }
-            else {
-                v = recursive(v);
-                u = makeRight(u, v);
-            }
-        } while(v.length() != 0);
-
-        return  u;
+        if (isRight(u)) {
+            return u + recursive(v);
+        }
+        else {
+            v = recursive(v);
+            return makeRight(u, v);
+        }
     }
 
 
-    // 균형잡힌 문자열로 변환
+    // 균형잡힌 문자열로 반환
     public static int getUIndex(String p) {
 
         int open = 0;
