@@ -6,12 +6,14 @@ import java.util.List;
 class StringCompression {
 
     public int solution(String s) {
-        int answer = 0;
+        int answer = s.length();
 
         int counter = 1;
 
         List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
+
+        // 반 이상 자를 필요 X
         int subLen = s.length() / 2;
         for (int i = 2; i < subLen; i++) {
 
@@ -26,13 +28,13 @@ class StringCompression {
                 list.add(s.substring(i * j));
 
             // 연속되는 패턴 찾기
-            for (int p = 0; p < list.size() - 1; p++) {
+            for (int p = 0; p < list.size(); p++) {
                 if (list.get(p).equals(list.get(p + 1)))
                     counter++;
                 else if (counter > 1) {
                     sb.append(counter);
                     sb.append(list.get(p - 1));
-                    counter = 0;
+                    counter = 1;
                 }
                 else
                     sb.append(list.get(p));
@@ -40,8 +42,11 @@ class StringCompression {
 
             if (counter > 1) {
                 sb.append(counter);
-
+                sb.append(list.get(list.size() - 1));
+                counter = 1;
             }
+
+            answer = Math.min(answer, sb.length());
 
             System.out.println(Arrays.toString(list.toArray()));
             System.out.println(sb);
@@ -54,6 +59,6 @@ class StringCompression {
 
     public static void main(String[] args) {
         StringCompression s = new StringCompression();
-        s.solution("abcabcabcabcdededededede");
+        System.out.println(s.solution("abcabcabcabcdededededede"));
     }
 }
