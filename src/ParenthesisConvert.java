@@ -16,17 +16,21 @@ public class ParenthesisConvert {
     // 재귀적으로 문자열 나누기
     public static String recursive(String p) {
 
+        // 1. 빈 문자열이면
         if (p.length() == 0) return p;
 
-        // 균형잡힌 문자열로 나눔
+        // 2.균형잡힌 문자열로 나눔
         String u = p.substring(0, getUIndex(p));
         String v = p.substring(getUIndex(p));
 
+        // 3.
         // u가 올바른 문자열인가?
         // v에 대해 getUIndex 재귀적으로 적용
         if (isRight(u)) {
             return u + recursive(v);
         }
+        // 4. v에 대해 재귀적으로 실행 후
+        // ( + v + ) + u에 대한 처리
         else {
             v = recursive(v);
             return makeRight(u, v);
