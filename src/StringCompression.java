@@ -17,13 +17,13 @@ class StringCompression {
             for (j = 0; j < s.length() / i; j++) {
                 list.add(s.substring(i * j, i * (j + 1)));
             }
-            System.out.println(Arrays.toString(list.toArray()));
 
             // 길이가 i 보다 작은 마지막 남은 s 출력
             if (i * j < s.length())
                 list.add(s.substring(i * j));
             // 종점
             list.add("");
+            System.out.println(Arrays.toString(list.toArray()));
 
             // 연속되는 패턴 찾기
             // 최소값 측정

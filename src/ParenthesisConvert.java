@@ -4,13 +4,11 @@ import java.util.*;
 //https://programmers.co.kr/learn/courses/30/lessons/60058
 public class ParenthesisConvert {
     public static void main(String[] args) {
-        System.out.println(solution("()))((()"));
+        System.out.println(solution("(()())()"));
     }
 
 
     public static String solution(String p) {
-
-        if (p.length() == 0) return p;
 
         return recursive(p);
     }
