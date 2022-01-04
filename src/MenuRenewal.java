@@ -54,7 +54,7 @@ public class MenuRenewal {
         return null;
     }
 
-    private static void setCombinationMap()
+    private static void setCombinationMap(){}
 
     // orders의 특정 메뉴가 얼마나 나왔는지 세고 해시맵에 저장
     private static HashMap<String, Integer> makeHashMap(String[] orders) {
@@ -77,7 +77,6 @@ public class MenuRenewal {
 
     private static String[] getResult(List<Map.Entry<String, Integer>> entryList, int[] course) {
 
-        String[] result = new String[];
 
         for (Integer n : course) {
 
