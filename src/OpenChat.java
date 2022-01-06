@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// https://programmers.co.kr/learn/courses/30/lessons/42888
 public class OpenChat {
     public static void main(String[] args) {
         OpenChat openChat = new OpenChat();
@@ -35,10 +36,6 @@ public class OpenChat {
 
         System.out.println(Arrays.toString(record));
         System.out.println(answer);
-
-        for (String data : record) {
-
-        }
 
         return answer;
     }
