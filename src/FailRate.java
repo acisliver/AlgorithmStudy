@@ -46,6 +46,8 @@ public class FailRate {
 
         System.out.println(failRates);
 
+        // 낮은 스테이지부터 나오게 해야할듯
+
         for (List<Integer> failRate : failRates) {
             answer.add(failRate.get(2));
         }
