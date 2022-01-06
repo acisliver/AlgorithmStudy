@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 // 실패율 = 스테이지에 도달, 클리어 X / 스테이지에 도달한 수
 public class FailRate {
     public static void main(String[] args) {
-        solution(5, new int[]{2, 1, 2, 6, 2, 4, 3, 3});
+        solution(4, new int[]{4,4,4,4,4});
     }
 
     public static ArrayList<Integer> solution(int N, int[] stages) {
@@ -42,11 +42,13 @@ public class FailRate {
             failRates.add(rate);
         }
 
-        failRates.sort((r1, r2) -> r2.get(0) * r1.get(1) - r1.get(0) * r2.get(1));
+        //실패율이 같다면 낮은 스테이지부터
+        failRates.sort((r1, r2) -> {
+            int compare = r2.get(0) * r1.get(1) - r1.get(0) * r2.get(1);
+            return compare == 0 ? r1.get(2) - r2.get(2) : compare;
+        });
 
         System.out.println(failRates);
-
-        // 낮은 스테이지부터 나오게 해야할듯
 
         for (List<Integer> failRate : failRates) {
             answer.add(failRate.get(2));
