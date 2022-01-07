@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 // 실패율 = 스테이지에 도달, 클리어 X / 스테이지에 도달한 수
 public class FailRate {
     public static void main(String[] args) {
-        solution(5, new int[]{2, 1, 2, 4, 2, 4, 3, 3});
+        solution(6, new int[]{2, 1, 2, 4, 2, 4, 3, 3});
     }
 
     public static ArrayList<Integer> solution(int N, int[] stages) {
@@ -39,10 +39,7 @@ public class FailRate {
             }
             rate = new ArrayList<>();
             // 스테이지에 도달한 유저가 없는 경우 해당 스테이지의 실패율은 0
-            if (length == 0) {
-                failer = 0;
-                length = 1;
-            }
+
             rate.add(failer);
             rate.add(length);
             rate.add(stage);
