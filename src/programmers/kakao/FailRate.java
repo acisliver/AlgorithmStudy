@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 // 실패율이 높은 스테이지부터 내림차순
 // 실패율이 같은 스테이지라면 작은 번호의 스테이지가 먼저 오도록 정렬
 // 스테이지에 도달한 유저가 없다면 실패율 0
-// 실패율 = 스테이지에 도달, 클리어 X / 스테이지에 도달한 수
+// 실패율 = 스테이지에 도달 & 클리어 X / 스테이지에 도달한 수
 public class FailRate {
     public static void main(String[] args) {
-        solution(6, new int[]{2, 1, 2, 4, 2, 4, 3, 3});
+        System.out.println(solution(5, new int[]{2, 1, 2, 6, 2, 4, 3, 3}));
     }
 
     public static ArrayList<Integer> solution(int N, int[] stages) {
@@ -20,7 +20,9 @@ public class FailRate {
         // boxed & sorted
         List<Integer> stageList =
                 Arrays.stream(stages)
-                        .boxed().sorted().collect(Collectors.toList());
+                        .boxed()
+                        .sorted()
+                        .collect(Collectors.toList());
 
         System.out.println(stageList);
 

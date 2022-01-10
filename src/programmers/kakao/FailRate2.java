@@ -14,7 +14,7 @@ public class FailRate2 {
     }
 
     public static int[] solution(int N, int[] stages) {
-        int[] answer = new int[N];
+        ArrayList<Integer> answer = new ArrayList<>();
         ArrayList<Float> failOfStage = new ArrayList<>();
         int failN = 0;
         int stageN = 0;
@@ -37,6 +37,8 @@ public class FailRate2 {
         System.out.println(failOfStage);
 
 
-        return answer;
+        return answer.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
     }
 }
