@@ -11,7 +11,7 @@ public class OpenChat2 {
     }
 
     private static final String ENTER_FORMAT = "%s님이 들어왔습니다.";
-    private static final String LEAVE_FORMAT = "%s님이 ";
+    private static final String LEAVE_FORMAT = "%s님이 나갔습니다.";
 
     public String[] solution(String[] record) {
         ArrayList<String> answer = new ArrayList<>();
