@@ -15,16 +15,15 @@ public class NQueen {
         int N = sc.nextInt();
 
         // 알고리즘
-        int[] out = nQueen(N);
-
-        // 출력
-        for (int i : out) {
-            System.out.println(i);
-        }
+        nQueen(N);
     }
 
     private static int[] nQueen(int n) {
 
+        // 퀸의 수만큼의 체스보드 생성
+        // 1부터 시작
+        // 인덱스: 행
+        // 값: 열
         board = new int[n + 1];
 
         return recursive(0, n);
@@ -32,10 +31,13 @@ public class NQueen {
 
     // board[i] = 0 이면 퀸이 아직 놓이지 않은 행
     // 퀸이 놓이면 board 값은 1 ~ 8
-    // 시작 정점 1
     private static int[] recursive(int i, int n) {
         if (valid(i)) {
             if (i == n) {
+                // 출력
+                for (int q = 1; q < board.length; q++) {
+                    System.out.println(board[q]);
+                }
                 return board;
             }
             for (int m = 1; m <= n; m++) {
@@ -48,16 +50,20 @@ public class NQueen {
 
     // 가지치기 조건
     private static boolean valid(int i) {
-        if (i == 0) return true;
 
-        // 같은 열확인
-        for (int j = 1; j < i; j++) {
-            if (board[i - 1] == board[j]) return false;
+        int j = 1;
+
+        while (j < i) {
+            // 같은 열확인
+            if (board[i] == board[j]) return false;
+
+            // 왼쪽 대각선 확인
+            if (board[i] == board[j]) return false;
+
+            // 오른쪽 대각선 확인
+            if (board[i] == board[j])return false;
+            j++;
         }
-        // 대각선 확인 1
-
-
-        // 대각선 확인 2
 
         return true;
     }
