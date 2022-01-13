@@ -2,6 +2,7 @@ package bj;
 
 import java.util.Scanner;
 
+// https://www.acmicpc.net/problem/3344
 public class NQueen {
     private static int[] board;
     private static boolean isPrint;
