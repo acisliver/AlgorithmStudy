@@ -2,11 +2,7 @@ package bj;
 
 import java.util.Scanner;
 
-// https://www.acmicpc.net/problem/3344
-// N * N 체스 보드에 N개의 퀸이 서로 공격하지 못하게 배치
-// 행을 기준으로 재귀 할 예정
 public class NQueen {
-
     private static int[] board;
     private static boolean isPrint;
 
@@ -15,28 +11,23 @@ public class NQueen {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
 
-        // 알고리즘
-        nQueen(N);
-    }
-
-    private static void nQueen(int n) {
-
         // 퀸의 수만큼의 체스보드 생성
         // 1부터 시작
         // 인덱스: 행
         // 값: 열
-        board = new int[n + 1];
-        isPrint = false;
+        board = new int[N + 1];
 
-        recursive(0, n);
+        // 알고리즘
+        nQueen(0, N);
     }
 
     // board[i] = 0 이면 퀸이 아직 놓이지 않은 행
     // 퀸이 놓이면 board 값은 1 ~ 8
-    private static void recursive(int i, int n) {
+    private static void nQueen(int i, int n) {
 
         if (valid(i)) {
             if (i == n) {
+                // 경우의 수 중 하나만 출력
                 if (!isPrint){
                     // 출력
                     for (int q = 1; q < board.length; q++) {
@@ -48,7 +39,7 @@ public class NQueen {
             }
             for (int m = 1; m <= n; m++) {
                 board[i + 1] = m;
-                recursive(i + 1, n);
+                nQueen(i + 1, n);
             }
         }
         return;
@@ -74,5 +65,4 @@ public class NQueen {
 
         return true;
     }
-
 }
