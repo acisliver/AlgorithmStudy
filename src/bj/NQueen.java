@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class NQueen {
 
     private static int[] board;
+    private static boolean isPrint;
 
     public static void main(String[] args) {
         // 입력
@@ -25,6 +26,7 @@ public class NQueen {
         // 인덱스: 행
         // 값: 열
         board = new int[n + 1];
+        isPrint = false;
 
         return recursive(0, n);
     }
@@ -34,10 +36,15 @@ public class NQueen {
     private static int[] recursive(int i, int n) {
         if (valid(i)) {
             if (i == n) {
-                // 출력
-                for (int q = 1; q < board.length; q++) {
-                    System.out.println(board[q]);
+
+                if (!isPrint){
+                    // 출력
+                    for (int q = 1; q < board.length; q++) {
+                        System.out.println(board[q]);
+                    }
+                    isPrint = true;
                 }
+
                 return board;
             }
             for (int m = 1; m <= n; m++) {
@@ -58,10 +65,10 @@ public class NQueen {
             if (board[i] == board[j]) return false;
 
             // 왼쪽 대각선 확인
-            if (board[i] == board[j]) return false;
+            if (board[i] == board[j] - i + j) return false;
 
             // 오른쪽 대각선 확인
-            if (board[i] == board[j])return false;
+            if (board[i] == board[j] + i - j)return false;
             j++;
         }
 
