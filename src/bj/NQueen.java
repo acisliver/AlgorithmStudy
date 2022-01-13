@@ -34,6 +34,7 @@ public class NQueen {
     // board[i] = 0 이면 퀸이 아직 놓이지 않은 행
     // 퀸이 놓이면 board 값은 1 ~ 8
     private static void recursive(int i, int n) {
+
         if (valid(i)) {
             if (i == n) {
                 if (!isPrint){
@@ -43,7 +44,6 @@ public class NQueen {
                     }
                     isPrint = true;
                 }
-
                 return;
             }
             for (int m = 1; m <= n; m++) {
@@ -63,11 +63,12 @@ public class NQueen {
             // 같은 열확인
             if (board[i] == board[j]) return false;
 
-            // 왼쪽 대각선 확인
+            // 왼쪽 대각선 확인 \
             if (board[i] == board[j] - i + j) return false;
 
-            // 오른쪽 대각선 확인
-            if (board[i] == board[j] + i - j)return false;
+            // 오른쪽 대각선 확인 /
+            if (board[i] == board[j] + i - j) return false;
+
             j++;
         }
 
