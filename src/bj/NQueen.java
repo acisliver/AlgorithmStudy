@@ -19,7 +19,7 @@ public class NQueen {
         nQueen(N);
     }
 
-    private static int[] nQueen(int n) {
+    private static void nQueen(int n) {
 
         // 퀸의 수만큼의 체스보드 생성
         // 1부터 시작
@@ -28,15 +28,14 @@ public class NQueen {
         board = new int[n + 1];
         isPrint = false;
 
-        return recursive(0, n);
+        recursive(0, n);
     }
 
     // board[i] = 0 이면 퀸이 아직 놓이지 않은 행
     // 퀸이 놓이면 board 값은 1 ~ 8
-    private static int[] recursive(int i, int n) {
+    private static void recursive(int i, int n) {
         if (valid(i)) {
             if (i == n) {
-
                 if (!isPrint){
                     // 출력
                     for (int q = 1; q < board.length; q++) {
@@ -45,14 +44,14 @@ public class NQueen {
                     isPrint = true;
                 }
 
-                return board;
+                return;
             }
             for (int m = 1; m <= n; m++) {
                 board[i + 1] = m;
                 recursive(i + 1, n);
             }
         }
-        return null;
+        return;
     }
 
     // 가지치기 조건
