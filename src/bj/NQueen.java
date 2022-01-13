@@ -3,6 +3,7 @@ package bj;
 import java.util.Scanner;
 
 // https://www.acmicpc.net/problem/3344
+// 컴퓨팅 사고 X 완전 다른
 public class NQueen {
     private static int[] board;
     private static boolean isPrint;
