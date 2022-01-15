@@ -33,8 +33,35 @@ public class OperatorInsert {
         String[] operator = numToOperator(n, opNum);
         System.out.println(Arrays.toString(operator));
         
-        getMin(nums, opNum);
-        getMax(nums, opNum);
+        bruteForce(nums, operator);
+    }
+
+    private static int bruteForce(int[] nums, String[] operator) {
+
+        int result = 0;
+
+        int idx = 0;
+        for (String op : operator) {
+            switch (op) {
+                case "+":
+                    result += nums[idx] + nums[idx + 1];
+                    break;
+                case "-":
+                    result += nums[idx] - nums[idx + 1];
+                    break;
+                case "*":
+                    result += nums[idx] * nums[idx + 1];
+                    break;
+                case "/":
+                    result += nums[idx] / nums[idx + 1];
+                    break;
+                default:
+                    System.out.println("operator에 다른 케이스 삽입됨");
+            }
+            idx++;
+        }
+        
+        return result;
     }
 
     private static String[] numToOperator(int n, int[] opNum) {
@@ -51,14 +78,5 @@ public class OperatorInsert {
         }
 
         return operator;
-    }
-
-    private static void getMax(int[] nums, int[] operator) {
-
-
-    }
-
-    private static void getMin(int[] nums, int[] operator) {
-
     }
 }
