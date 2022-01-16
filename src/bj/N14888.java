@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 // https://www.acmicpc.net/problem/14888
+// 연산자 끼워넣기
 // 완전탐색에 중첩되는 경우는 백트래킹으로 풀이
-public class OperatorInsert {
+public class N14888 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());

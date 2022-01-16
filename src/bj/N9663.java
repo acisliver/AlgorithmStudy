@@ -2,8 +2,9 @@ package bj;
 
 import java.util.Scanner;
 
-//https://www.acmicpc.net/problem/9663
-public class NQueenCount {
+// https://www.acmicpc.net/problem/9663
+// N-Queen 개수 세기 (0 < N < 15)
+public class N9663 {
     private static int[] board;
     private static int count;
 
