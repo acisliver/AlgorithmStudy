@@ -3,12 +3,17 @@ package bj;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 // https://www.acmicpc.net/problem/14888
 // 연산자 끼워넣기
 // 완전탐색에 중첩되는 경우는 백트래킹으로 풀이
 public class N14888 {
+
+    private static ArrayList<Integer> results;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,13 +41,19 @@ public class N14888 {
     }
 
     private static void solution(int N, int[] A, int[] opNum) {
+        results = new ArrayList<>();
+
         recursive(N, 0, A, opNum, A[0]);
+
+        Collections.sort(results);
+        System.out.println(results.get(results.size() - 1));
+        System.out.println(results.get(0));
     }
 
     private static void recursive(int N, int i, int[] A, int[] opNum, int result) {
         int pastResult;
         if (i == N - 1) {
-            System.out.println(result);
+            results.add(result);
         }
         else
             for (int j = 0; j < 4; j++) {
