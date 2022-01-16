@@ -51,7 +51,6 @@ public class N14888 {
     }
 
     private static void recursive(int N, int i, int[] A, int[] opNum, int result) {
-        int pastResult;
         if (i == N - 1) {
             results.add(result);
         }
@@ -59,11 +58,8 @@ public class N14888 {
             for (int j = 0; j < 4; j++) {
                  if (opNum[j] > 0) {
                      opNum[j] -= 1;
-                     pastResult = result;
-                     result = calculate(j, result, A[i + 1]);
-                     recursive(N, i + 1, A, opNum, result);
+                     recursive(N, i + 1, A, opNum, calculate(j, result, A[i + 1]));
                      opNum[j] += 1;
-                     result = pastResult;
                  }
             }
     }
