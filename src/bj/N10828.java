@@ -10,6 +10,7 @@ public class N10828 {
         ArrayStack stack = new ArrayStack();
         int commands = sc.nextInt();
         String command;
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < commands; i++) {
             command = sc.next();
             switch (command) {
@@ -17,21 +18,20 @@ public class N10828 {
                     stack.push(sc.nextInt());
                     break;
                 case "pop":
-                    System.out.println(stack.pop());
+                    sb.append(stack.pop()).append("\n");
                     break;
                 case "size":
-                    System.out.println(stack.size());
+                    sb.append(stack.size()).append("\n");
                     break;
                 case "empty":
-                    System.out.println(stack.empty());
+                    sb.append(stack.empty()).append("\n");
                     break;
                 case "top":
-                    System.out.println(stack.top());
+                    sb.append(stack.top()).append("\n");
                     break;
             }
-
         }
-
+        System.out.println(sb);
     }
 
     public static class ArrayStack {
