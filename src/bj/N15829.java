@@ -11,26 +11,14 @@ public class N15829 {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         String str = sc.next();
-        char[] chars = new char[str.length()];
-        int result = 0;
-        for (int i = 0; i < str.length(); i++) {
-             chars[i] = str.charAt(i);
-        }
+        long result = 0;
+        long pow = 1;
 
-        int idx = 0;
-        for (char c : chars) {
-            result += (c - 'a' + 1) * square(idx);
-            if (result >= M) result -= M;
-            idx++;
-        }
-        System.out.println(result);
-    }
-
-    public static int square(int n) {
-        int result = 1;
         for (int i = 0; i < n; i++) {
-            result *= 31;
+             result += (str.charAt(i) - 'a' + 1) * pow;
+             pow = pow * 31 % M;
         }
-        return result;
+
+        System.out.println(result % M);
     }
 }
