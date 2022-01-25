@@ -37,11 +37,11 @@ public class N15683 {
         int i, j;
         String[][] beforeOffice;
         if (N * M == idx) {
-            //for (int k = 0; k < office.length; k++) {
-            //    System.out.println(Arrays.toString(office[k]));
-            //}
+            for (int k = 0; k < office.length; k++) {
+                System.out.println(Arrays.toString(office[k]));
+            }
             MIN = Math.min(MIN, countBlindSpot(office));
-            /// System.out.println(MIN);
+            System.out.println(MIN);
         } else {
             i = idx / M;
             j = idx % M;
