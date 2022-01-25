@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 // https://www.acmicpc.net/problem/15683
@@ -36,59 +35,160 @@ public class N15683 {
 
     private static void recursive(int N, int M, String[][] office, int idx) {
         int i, j;
+        String[][] beforeOffice;
         if (N * M == idx) {
-            MIN = countBlindSpot(office);
-            System.out.println(MIN);
-            System.out.println(Arrays.deepToString(office));
+            //for (int k = 0; k < office.length; k++) {
+            //    System.out.println(Arrays.toString(office[k]));
+            //}
+            MIN = Math.min(MIN, countBlindSpot(office));
+            /// System.out.println(MIN);
         } else {
-            i = idx / N;
+            i = idx / M;
             j = idx % M;
             switch (office[i][j]) {
                 case "5":
-                    // 열 "#"으로 변환
-                    for (int k = 0; k < N; k++) {
-                        // 벽인 경우
-                        if (office[k][j].equals("6")) {
-                            // 벽이 5보다 아래 있을 경우 변환 종료
-                            if (k > i) break;
-                            // 벽이 5보다 위에 있을 경우 이전 변환 0으로 복구
-                            else {
-                                for (int l = 0; l < k; l++) {
-                                    // cctv인 경우
-                                    if (Integer.parseInt(office[k][j]) > 0) break;
-                                    office[k][j] = "0";
-                                }
-
-                            }
-                        }
-                        // 빈 공간인 경우
-                        if (office[k][j].equals("0")) office[k][j] = "#";
-                    }
-
-                    for (int l = 0; l < M; l++) {
-                        // 벽인 경우
-                        if (office[i][l].equals("6")) {
-                            // 벽이 5보다 오른쪽에 있을 경우
-                            if (l > j) break;
-                            else {
-                                for (int k = 0; k < office.length; k++) {
-                                    // cctv인 경우
-                                    if (Integer.parseInt(office[i][k]) > 0) break;
-                                    office[i][k] = "0";
-                                }
-                            }
-                        }
-                        // 빈 공간일 경우
-                        if (office[i][l].equals("0")) office[i][l] = "#";
-                    }
+                    up(office, i, j);
+                    down(office, i, j, N);
+                    left(office, i, j);
+                    right(office, i, j, M);
 
                     recursive(N, M, office, idx + 1);
+                    break;
+                case "4":
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    left(office, i, j);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    right(office, i, j, M);
+                    down(office, i, j, N);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    left(office, i, j);
+                    down(office, i, j, N);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    down(office, i, j, N);
+                    left(office, i, j);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    break;
+                case "3":
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    left(office, i, j);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    down(office, i, j, N);
+                    left(office, i, j);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    down(office, i, j, N);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    break;
+                case "2":
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    down(office, i, j, N);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    left(office, i, j);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    break;
+                case "1":
+                    beforeOffice = deepClone(office);
+                    up(office, i, j);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    down(office, i, j, N);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    left(office, i, j);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
+
+                    beforeOffice = deepClone(office);
+                    right(office, i, j, M);
+                    recursive(N, M, office, idx + 1);
+                    office = beforeOffice;
                     break;
                 default:
                     recursive(N, M, office, idx + 1);
             }
 
         }
+    }
+
+    private static void up(String[][] office, int i, int j) {
+        for (int k = i - 1; k >= 0; k--) {
+            if (office[k][j].equals("6"))
+                break;
+            else if (office[k][j].equals("0"))
+                office[k][j] = "#";
+            else
+                continue;
+        }
+        // System.out.println("up");
+    }
+
+    private static void down(String[][] office, int i, int j, int N) {
+        for (int k = i + 1; k < N; k++) {
+            if (office[k][j].equals("6"))
+                break;
+            else if (office[k][j].equals("0"))
+                office[k][j] = "#";
+            else
+                continue;
+        }
+        // System.out.println("down");
+    }
+
+    private static void left(String[][] office, int i, int j) {
+        for (int k = j; k >= 0; k--) {
+            if (office[i][k].equals("6"))
+                break;
+            else if (office[i][k].equals("0"))
+                office[i][k] = "#";
+            else
+                continue;
+        }
+        // System.out.println("left");
+    }
+
+    private static void right(String[][] office, int i, int j, int M) {
+        for (int k = j; k < M; k++) {
+            if (office[i][k].equals("6"))
+                break;
+            else if (office[i][k].equals("0"))
+                office[i][k] = "#";
+            else
+                continue;
+        }
+        // System.out.println("right");
     }
 
     private static int countBlindSpot(String[][] office) {
@@ -99,5 +199,15 @@ public class N15683 {
         }
 
         return count;
+    }
+
+    private static String[][] deepClone(String[][] array) {
+        String[][] newArray = new String[array.length][array[0].length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
+                newArray[i][j] = array[i][j];
+            }
+        }
+        return newArray;
     }
 }
