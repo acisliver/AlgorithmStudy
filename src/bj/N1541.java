@@ -11,25 +11,26 @@ import java.util.Arrays;
 public class N1541 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input = br.readLine();
-        String[] operator = input.split("[0-9]+");
-        operator = Arrays.copyOfRange(operator, 1, operator.length);
-        int[] operand = Arrays.stream(input.split("[\\D]"))
+        String[] input = br.readLine().split("-");
+        int result;
+        int tmp;
+        for (int i = 0; i < input.length; i++) {
+            tmp = 0;
+            int[] operand = Arrays.stream(input[i].split("\\+"))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+            for (int o : operand) {
+                tmp += o;
+            }
+            input[i] = String.valueOf(tmp);
+        }
+        int[] nums = Arrays.stream(input)
                 .mapToInt(Integer::parseInt)
                 .toArray();
-
-        int tmp = operand[0];
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        for (int i = 0; i < operator.length; i++) {
-            if (operator[i].equals("+")) {
-                tmp += operand[i + 1];
-            } else {
-                arrayList.add(tmp);
-                tmp = operand[i + 1];
-            }
+        result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            result -= nums[i];
         }
-        arrayList.add(tmp);
-        System.out.println(arrayList.stream()
-                .reduce(arrayList.remove(0), (a, b) -> a - b));
+        System.out.println(result);
     }
 }
