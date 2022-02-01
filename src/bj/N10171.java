@@ -1,3 +1,5 @@
+package bj;
+
 public class N10171 {
     public static void main(String[] args) {
         String s = "\\    /\\\n" +
