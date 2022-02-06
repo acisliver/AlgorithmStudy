@@ -19,6 +19,7 @@ public class N1931 {
             jobList.add(new int[] {start, end});
         }
 
+        // 종료시간이 같을 경우 시작 시간이 빠른 순으로
         jobList.sort(Comparator.comparingInt(j -> j[0]));
         jobList.sort(Comparator.comparingInt(j -> j[1]));
 
