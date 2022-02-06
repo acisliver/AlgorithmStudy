@@ -9,13 +9,15 @@ import java.util.Arrays;
 // 외판원 순회
 public class N2098 {
     private static int N;
-    private static int[][] WEIGHTS;
     private static int MIN = Integer.MAX_VALUE;
+    private static int[][] WEIGHTS;
+    private static int[][] DP;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         WEIGHTS = new int[N][];
+        DP = new int[N][(1 << N) - 1];
 
         for (int i = 0; i < N; i++) {
             WEIGHTS[i] = Arrays.stream(br.readLine().split(" "))
