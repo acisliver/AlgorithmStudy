@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-
+// https://www.acmicpc.net/problem/2638
+// 치즈
 public class N2638 {
     private static int n, m;
     private static final int[] DX = {0, 0, -1, 1};
