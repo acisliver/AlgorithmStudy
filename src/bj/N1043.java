@@ -86,7 +86,7 @@ public class N1043 {
     public static void union(int a, int b) {
         int root1 = find(a);
         int root2 = find(b);
-        if (root1 != root2) {
+        if (root1 != root2) {       // 트리의 사이클을 없애기 위해
             parents[find(a)] = b;   // find(a)의 루트를 b로 만듦
         }
     }
