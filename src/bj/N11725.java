@@ -3,32 +3,36 @@ package bj;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 // https://www.acmicpc.net/problem/11725
 // 트리의 부모 찾기
 public class N11725 {
-    private static int n;
-    private static boolean[][] tree;
+
+    private static ArrayList<LinkedList<Integer>> tree;
     private static int[] parents;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
-        tree = new boolean[n][n];
+        int n = Integer.parseInt(br.readLine());
+        tree = new ArrayList<>();
+
+        // 인접리스트 초기화
+        for (int i = 0; i < n; i++) {
+            tree.add(new LinkedList<>());
+        }
 
         StringTokenizer st;
         for (int i = 0; i < n - 1; i++) {
             st = new StringTokenizer(br.readLine());
             int node1 = Integer.parseInt(st.nextToken()) - 1;
             int node2 = Integer.parseInt(st.nextToken()) - 1;
-            tree[node1][node2] = true;
-            tree[node2][node1] = true;
+            tree.get(node1).add(node2);
+            tree.get(node2).add(node1);
         }
 
         parents = new int[n];
+        Arrays.fill(parents, -1);
 
         bfs(0);
 
@@ -41,22 +45,18 @@ public class N11725 {
     }
 
     private static void bfs(int startNode) {
-        int visited = 1;
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(startNode);
 
         while (!queue.isEmpty()) {
             int parent = queue.poll();
 
-            for (int i = 0; i < n; i++) {
-                if (tree[parent][i] && ((visited & (1 << i)) != (1 << i))) {
-                    parents[i] = parent;
-                    visited |= 1 << i;
-                    queue.offer(i);
+            for (Integer node : tree.get(parent)) {
+                if (parents[node] == -1) {
+                    parents[node] = parent;
+                    queue.offer(node);
                 }
             }
-
         }
-
     }
 }
