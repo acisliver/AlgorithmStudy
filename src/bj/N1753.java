@@ -54,10 +54,13 @@ public class N1753 {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         int[] distance = new int[V];
         Arrays.fill(distance, Integer.MAX_VALUE);
+        int[] visited = new int[V];
+        Arrays.fill(visited, 0);
 
         // 2. 시작노드의 거리를 0으로
         pq.offer(new Node(START, 0));
         distance[START] = 0;
+        visited[START] = 1;
 
         // 3. 시작노드와 인접한 노드들의 distance값 갱신
         graph.get(START)
@@ -67,9 +70,15 @@ public class N1753 {
         }
 
         while (!pq.isEmpty()) { // 모든 노드를 방문할 때까지 반복
+            if (Arrays.stream(visited)
+                    .filter(v -> v == 1)
+                    .count() == V)
+                break;
+
             // 4. 방문하지 않은 노드 중 distance 값이 최소인 정점을 찾음
             // 5. 최소인 정점을 방문
             Node curNode = pq.poll();
+            visited[curNode.node] = 1;
 
             // 최소인 정점과 연결된 정점들의 distance 갱신
             for (Edge edge : graph.get(curNode.node)) {
