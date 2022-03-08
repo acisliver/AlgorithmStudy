@@ -78,7 +78,10 @@ public class N1753 {
             // 4. 방문하지 않은 노드 중 distance 값이 최소인 정점을 찾음
             // 5. 최소인 정점을 방문
             Node curNode = pq.poll();
+            if (visited[curNode.node] == 1) continue;
             visited[curNode.node] = 1;
+
+
 
             // 최소인 정점과 연결된 정점들의 distance 갱신
             for (Edge edge : graph.get(curNode.node)) {
@@ -89,12 +92,14 @@ public class N1753 {
             }
         }
         // 출력
+        StringBuilder sb = new StringBuilder();
         Arrays.stream(distance)
                 .mapToObj(d -> {
                     if (d == Integer.MAX_VALUE) return "INF";
                     else return String.valueOf(d);
                 })
-                .forEach(System.out::println);
+                .forEach(v -> sb.append(v).append("\n"));
+        System.out.println(sb);
     }
 }
 
