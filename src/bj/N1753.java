@@ -11,6 +11,20 @@ import java.util.stream.IntStream;
 public class N1753 {
     static int V, E, START;
 
+    static class Node implements Comparable<Node> {
+        int node, dis;
+
+        public Node(int node, int dis) {
+            this.node = node;
+            this.dis = dis;
+        }
+
+        @Override
+        public int compareTo(Node node) {
+            return this.dis - node.dis;
+        }
+    }
+
     static class Edge {
         int node, weight;
 
@@ -28,7 +42,6 @@ public class N1753 {
         START = Integer.parseInt(br.readLine()) - 1;
 
         ArrayList<LinkedList<Edge>> graph = new ArrayList<>(V); // 인접리스트
-        Collections.fill(graph, new LinkedList<>());
         IntStream.range(0, V + 1)
                 .forEach(i -> graph.add(new LinkedList<>()));
 
@@ -38,52 +51,42 @@ public class N1753 {
         }
 
         // 1. distance를 무한대로 초기화
+        PriorityQueue<Node> pq = new PriorityQueue<>();
         int[] distance = new int[V];
-        int visited = 0;
-        Arrays.fill(distance, 11);
+        Arrays.fill(distance, Integer.MAX_VALUE);
 
         // 2. 시작노드의 거리를 0으로
+        pq.offer(new Node(START, 0));
         distance[START] = 0;
-        visited |= 1 << (START);
 
         // 3. 시작노드와 인접한 노드들의 distance값 갱신
+        graph.get(START)
+                .forEach(edge -> pq.offer(new Node(edge.node, edge.weight)));
         for (Edge edge : graph.get(START)) {
             distance[edge.node] = edge.weight;
         }
 
-        while (Integer.bitCount(visited) < V) { // 모든 노드를 방문할 때까지 반복
+        while (!pq.isEmpty()) { // 모든 노드를 방문할 때까지 반복
             // 4. 방문하지 않은 노드 중 distance 값이 최소인 정점을 찾음
-            int minVertex = findMinIdx(distance, visited);
             // 5. 최소인 정점을 방문
-            visited |= 1 << (minVertex);
+            Node curNode = pq.poll();
+
             // 최소인 정점과 연결된 정점들의 distance 갱신
-            for (Edge edge : graph.get(minVertex)) {
-                if ((visited & (1 << edge.node)) == 0) {
-                    if (distance[minVertex] + edge.weight < distance[edge.node]) {
-                        distance[edge.node] = distance[minVertex] + edge.weight;
-                    }
+            for (Edge edge : graph.get(curNode.node)) {
+                if (curNode.dis + edge.weight < distance[edge.node]) {
+                    distance[edge.node] = curNode.dis + edge.weight;
+                    pq.offer(new Node(edge.node, distance[edge.node]));
                 }
             }
         }
-
+        // 출력
         Arrays.stream(distance)
                 .mapToObj(d -> {
-                    if (d > 10) return "INF";
+                    if (d == Integer.MAX_VALUE) return "INF";
                     else return String.valueOf(d);
                 })
                 .forEach(System.out::println);
     }
-
-    public static int findMinIdx(int[] distance, int visited) {
-        int min = Integer.MAX_VALUE;
-        int minIdx = 0;
-        for (int i = 0; i < distance.length; i++) {
-            if ((visited & (1 << i)) == 0 && distance[i] < min) {
-                min = distance[i];
-                minIdx = i;
-            }
-        }
-
-        return minIdx;
-    }
 }
+
+
