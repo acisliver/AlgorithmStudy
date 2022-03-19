@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.IntStream;
 
 // https://www.acmicpc.net/problem/1753
 // 최단경로
@@ -57,7 +56,7 @@ public class N1753 {
 
         // 3. 시작노드와 인접한 노드들의 distance값 갱신
         graph.get(START)
-                .forEach(edge -> pq.offer(new Node(edge.node, edge.weight)));
+                .forEach(node -> pq.offer(new Node(node.node, node.weight)));
         for (Node node : graph.get(START)) {
             distance[node.node] = node.weight;
         }

@@ -57,7 +57,6 @@ public class N1043 {
                     }
                 }
             }
-
         }
 
         int answer = m;
