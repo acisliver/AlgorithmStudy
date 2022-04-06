@@ -46,13 +46,13 @@ public class N10816 {
         int high = arr.length;
         int mid, midVal;
 
-        while(low <= high) {
+        while(low <= high) {    // low와 high가 같아질때 까지
             mid = (low + high) >>> 1;
             midVal = arr[mid];
 
-            if (key <= midVal) {
+            if (key <= midVal) {    // 키가 왼쪽에 있다.
                 high = mid;
-            } else {
+            } else {                //
                 low = mid + 1;
             }
         }
@@ -69,9 +69,9 @@ public class N10816 {
             mid = (low + high) >>> 1;
             midVal = arr[mid];
 
-            if (key < midVal) {
+            if (key < midVal) {     // 탐색할 값의 상힌이 오른쪽에 있다
                 high = mid;
-            } else {
+            } else {                // 키와 같거나 작으면 상한이 오른쪽에 있다.
                 low = mid + 1;
             }
         }
