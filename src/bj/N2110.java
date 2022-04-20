@@ -47,12 +47,12 @@ public class N2110 {
 
     public static int canLocate(long distance) {
         int count = 1;
-        long lastLocated = home[0];
+        long lastLocated = home[0]; // 첫번째 집은 무조건 공유기 설치
 
         for (int i = 1; i < home.length; i++) {
             int curLocate = home[i];
 
-            if (curLocate - lastLocated > distance) {
+            if (curLocate - lastLocated >= distance) {
                 count++;
                 lastLocated = curLocate;
             }
