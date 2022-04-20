@@ -52,6 +52,7 @@ public class N2110 {
         for (int i = 1; i < home.length; i++) {
             int curLocate = home[i];
 
+            // 공유기가 설치된 집에서 다음 집까지의 거리가 distance보다 길어야한다.
             if (curLocate - lastLocated >= distance) {
                 count++;
                 lastLocated = curLocate;
