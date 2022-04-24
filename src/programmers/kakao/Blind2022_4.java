@@ -6,7 +6,7 @@ import java.util.Arrays;
 // 양궁대회
 // DFS
 public class Blind2022_4 {
-    static int lionScore = 0;
+    static int diff = 0;
     static int[] answer = new int[]{-1};
 
     public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class Blind2022_4 {
     }
     public int[] solution(int n, int[] apeachInfo) {
 
-        dfs(n, apeachInfo, 0, 0, new int[11], 0);
+        dfs(n, apeachInfo, 0, new int[11], 0);
 
         return answer;
     }
@@ -25,14 +25,13 @@ public class Blind2022_4 {
      * @param n 총 화살의 수
      * @param apeachInfo 어피치가 과녁을 맞춘 정보
      * @param count 라이언이 현재 쏜 화살의 수
-     * @param score 현재 계산된 라이언의 최대 점수
      * @param lionInfo 라이언이 과녁을 맞춘 정보
      * @param index 계산하고 있는 점수
      */
-    private void dfs(int n, int[] apeachInfo, int count, int score, int[] lionInfo, int index) {
+    private void dfs(int n, int[] apeachInfo, int count, int[] lionInfo, int index) {
         if (count == n) {   // 모든 화살을 셋을 때
-            if (isLionWin(apeachInfo, lionInfo) && lionScore < score) {
-                lionScore = score;          // 최댓값 갱신
+            if (getDiff(apeachInfo, lionInfo) >= diff) {
+                diff = getDiff(apeachInfo, lionInfo);          // 최대 차이 갱신
                 answer = lionInfo.clone();  //
             }
             return;
@@ -50,13 +49,13 @@ public class Blind2022_4 {
             }
             if (lionHit + count > n) continue;  // 화살이 더 필요할 경우 해당 경우는 불가능
             lionInfo[i] = lionHit;
-            dfs(n, apeachInfo, count + lionHit, score + 10 - i, lionInfo.clone(), i + 1);
+            dfs(n, apeachInfo, count + lionHit, lionInfo.clone(), i + 1);
             lionInfo[i] = 0;
         }
     }
 
     // 라이언이 어피치를 이겼는지 점수 확인
-    private boolean isLionWin(int[] apeachInfo, int[] lionInfo) {
+    private int getDiff(int[] apeachInfo, int[] lionInfo) {
         int lionScore = 0;
         int apeachScore = 0;
 
@@ -70,6 +69,6 @@ public class Blind2022_4 {
             }
         }
 
-        return lionScore > apeachScore;
+        return lionScore - apeachScore;
     }
 }
