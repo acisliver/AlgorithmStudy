@@ -6,7 +6,7 @@ import java.util.Arrays;
 // 양궁대회
 // DFS
 public class Blind2022_4 {
-    static int diff = 0;
+    static int maxDiff = 0;
     static int[] answer = new int[]{-1};
 
     public static void main(String[] args) {
@@ -30,9 +30,16 @@ public class Blind2022_4 {
      */
     private void dfs(int n, int[] apeachInfo, int count, int[] lionInfo, int index) {
         if (count == n) {   // 모든 화살을 셋을 때
-            if (getDiff(apeachInfo, lionInfo) >= diff) {
-                diff = getDiff(apeachInfo, lionInfo);          // 최대 차이 갱신
-                answer = lionInfo.clone();  //
+            if (getDiff(apeachInfo, lionInfo) >= maxDiff) {
+                if (getDiff(apeachInfo, lionInfo) == 0) {
+                    return;
+                }
+                if (getDiff(apeachInfo, lionInfo) == maxDiff) {
+                    answer = getLower(answer, lionInfo).clone();
+                } else {
+                    answer = lionInfo.clone();
+                }
+                maxDiff = getDiff(apeachInfo, lionInfo);
             }
             return;
         }
@@ -44,8 +51,8 @@ public class Blind2022_4 {
             int lionHit;    // 라이언이 (10 - index)점을 얻기위해 맞춰야하는 화살의 수
             if (i == 10) {  // 마지막 0점을 획득하는 경우 남은 화살을 모두 0점에 쏜다
                 lionHit = n - count;
-            } else {        // 어피치보다 많이 쏴야하기 때문
-                lionHit = apeachInfo[i] + 1;
+            } else {
+                lionHit = apeachInfo[i] + 1;    // 어피치보다 많이 쏴야하기 때문
             }
             if (lionHit + count > n) continue;  // 화살이 더 필요할 경우 해당 경우는 불가능
             lionInfo[i] = lionHit;
@@ -70,5 +77,16 @@ public class Blind2022_4 {
         }
 
         return lionScore - apeachScore;
+    }
+
+    // 가장 낮은 점수를 더 많이 맞힌 경우를 찾는 함수
+    private int[] getLower(int[] a, int[] b) {
+        if (a.length == 1) return b;
+
+        for (int i = 10; i >= 0; i--) {
+            if (a[i] > b[i]) return a;
+            else if (a[i] < b[i]) return b;
+        }
+        return new int[1];
     }
 }
