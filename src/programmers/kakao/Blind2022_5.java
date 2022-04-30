@@ -1,9 +1,5 @@
 package programmers.kakao;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 // https://programmers.co.kr/learn/courses/30/lessons/92343
 // 양과 늑대
 public class Blind2022_5 {
