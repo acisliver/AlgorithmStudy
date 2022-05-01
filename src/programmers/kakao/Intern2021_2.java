@@ -20,7 +20,7 @@ public class Intern2021_2 {
     }
 
     public static int[] DX = new int[]{0, 0, 1, -1, 1, -1, 1, -1, 0, 0, 2, -2};
-    public static int[] DY = new int[]{1, -1, 0, 0, -1, 1, -1, 1, 2, -2, 0, 0};
+    public static int[] DY = new int[]{1, -1, 0, 0, 1, -1, -1, 1, 2, -2, 0, 0};
 
     public int[] solution(String[][] places) {
         int[] answer = new int[5];
@@ -29,13 +29,12 @@ public class Intern2021_2 {
             int isOk = 1;
             String[] place = places[i1];
             char[][] matrix = toMatrix(place);
-            System.out.println(Arrays.deepToString(matrix));
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[i].length; j++) {
                     if (matrix[i][j] == 'P') {
                         for (int k = 0; k < 12; k++) {
-                            int row = i + DX[k];
-                            int col = j + DY[k];
+                            int row = i + DY[k];
+                            int col = j + DX[k];
 
                             if (row < 0 || col < 0 || row > 4 || col > 4) continue;
 
@@ -44,25 +43,29 @@ public class Intern2021_2 {
                             if (man == 'P') {
                                 if (k < 4) {        // 맨해튼 거리 1, 바로 옆
                                     isOk = 0;
+                                    break;
                                 } else if (k < 8) { //맨해튼 거리 2, 대각선
                                     if (matrix[row][j] == 'X' && matrix[i][col] == 'X') {
 
                                     } else {
                                         isOk = 0;
+                                        break;
                                     }
                                 }
                                 else {              // 맨해튼 거리 2, 2칸 직진
                                     if (i == row) { // 같은 열
-                                        if (matrix[i][j + DY[k] / 2] == 'X') {
+                                        if (matrix[i][j + DX[k] / 2] == 'X') {
 
                                         } else {
                                             isOk = 0;
+                                            break;
                                         }
                                     } else {        // 같은 행
-                                        if (matrix[i + DX[k] / 2][j] == 'X') {
+                                        if (matrix[i + DY[k] / 2][j] == 'X') {
 
                                         } else {
                                             isOk = 0;
+                                            break;
                                         }
                                     }
                                 }
