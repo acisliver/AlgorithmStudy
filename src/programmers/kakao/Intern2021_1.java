@@ -30,7 +30,7 @@ public class Intern2021_1 {
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c >= 96) {    // 문자라면
+            if (c >= 97) {    // 문자라면
                 String num = c + String.valueOf(s.charAt(i + 1));
                 int value = dic.get(num)[0];
                 i += dic.get(num)[1] + 1;
