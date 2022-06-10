@@ -17,7 +17,7 @@ public class Square {
         double from;
         for (long i = 1; i <= w; i++) {
             from = Math.ceil(i * h / (double) w);
-            if (from > to + 1) {
+            if (from > to) {
                 unUse += from - to;
             } else {
                 unUse++;
