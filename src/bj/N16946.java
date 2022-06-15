@@ -20,6 +20,7 @@ public class N16946 {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int[][] map = new int[n][m];
+        int[][] zeroMap = new int[n][m];
 
         for (int i = 0; i < n; i++) {
             map[i] = Arrays.stream(br.readLine().split(""))
@@ -29,13 +30,29 @@ public class N16946 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (map[i][j] == 1) {
+                if (map[i][j] == 0) {
                     count = 1;
                     boolean[][] visited = new boolean[n][m];
                     visited[i][j] = true;
-                    map[i][j] = 0;
                     dfs(i, j, visited, map, n, m);
-                    map[i][j] = count;
+                    zeroMap[i][j] = count;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (map[i][j] == 1) {
+                    for (int k = 0; k < 4; k++) {
+                        int nextI = i + DI[k];
+                        int nextJ = j + DJ[k];
+
+                        if (nextI < 0 || nextJ < 0 || nextI > n - 1 || nextJ > m - 1) continue;
+
+                        if (zeroMap[nextI][nextJ] == 0) continue;
+
+                        map[i][j] += zeroMap[nextI][nextJ];
+                    }
                 }
             }
         }
