@@ -1,8 +1,6 @@
 package bj;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 // 벽 부수고 이동하기 4
@@ -10,7 +8,7 @@ import java.util.*;
 public class N16946 {
     static int[] DI = new int[]{0, 0, 1, -1};
     static int[] DJ = new int[]{1, -1, 0, 0};
-    static Map<Integer, Integer> groupCount = new HashMap<>();
+    static Map<Integer, Integer> groupSize = new HashMap<>();
     static int[][] map;
     static int[][] group;
     static int groupNum = 0;
@@ -36,41 +34,19 @@ public class N16946 {
             for (int j = 0; j < m; j++) {
                 if (map[i][j] == 0 && group[i][j] == 0) {
                     groupNum++;
-//                    boolean[][] visited = new boolean[n][m];
-//                    visited[i][j] = true;
-//                    dfs(i, j, visited, n, m);
-                    groupCount.put(groupNum, bfs(i, j, n, m));
-//                    group[i][j] = groupNum;
+                    groupSize.put(groupNum, bfs(i, j, n, m));
                 }
             }
         }
 
-        // 총 갈 수 있는 개수 세기
+        // 정답 계산 및 출력
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (map[i][j] == 1) {
-                    Set<Integer> groupSet = new HashSet<>();
-                    for (int k = 0; k < 4; k++) {
-                        int nextI = i + DI[k];
-                        int nextJ = j + DJ[k];
-
-                        if (nextI < 0 || nextJ < 0 || nextI > n - 1 || nextJ > m - 1) continue;
-
-                        if (group[nextI][nextJ] == 0) continue;
-
-                        groupSet.add(group[nextI][nextJ]);
-                    }
-                    for (Integer integer : groupSet) {
-                        map[i][j] += groupCount.get(integer);
-                    }
+                if (map[i][j] == 0) sb.append(0);
+                else {
+                    sb.append(count(i, j, n, m));
                 }
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int[] ints : map) {
-            for (int i : ints) {
-                sb.append(i % 10);
             }
             sb.append("\n");
         }
@@ -78,12 +54,30 @@ public class N16946 {
         System.out.println(sb);
     }
 
-    private static int bfs(int i, int j, int n, int m) {
+    private static int count(int i, int j, int n, int m) {
         int count = 1;
+        Set<Integer> groupSet = new HashSet<>();
+        for (int k = 0; k < 4; k++) {
+            int nextI = i + DI[k];
+            int nextJ = j + DJ[k];
+
+            if (nextI < 0 || nextJ < 0 || nextI > n - 1 || nextJ > m - 1) continue;
+
+            if (group[nextI][nextJ] == 0) continue;
+
+            groupSet.add(group[nextI][nextJ]);
+        }
+        for (Integer integer : groupSet) {
+            count += groupSize.get(integer);
+        }
+
+        return count % 10;
+    }
+
+    private static int bfs(int i, int j, int n, int m) {
+        int size = 1;
         Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[n][m];
         queue.offer(new int[] {i, j});
-        visited[i][j] = true;
         group[i][j] = groupNum;
 
         while(!queue.isEmpty()) {
@@ -95,43 +89,15 @@ public class N16946 {
 
                 if (nI < 0 || nJ < 0 || nI > n - 1 || nJ > m - 1) continue;
 
-                if (visited[nI][nJ]) continue;
+                if (group[nI][nJ] > 0) continue;
 
                 if (map[nI][nJ] > 0) continue;
 
-                visited[nI][nJ] = true;
-                count++;
-
+                size++;
                 group[nI][nJ] = groupNum;
                 queue.offer(new int[] {nI, nJ});
             }
         }
-
-
-        return count;
+        return size;
     }
-
-//    private static void dfs(int i, int j, boolean[][] visited, int n, int m) {
-//        if (map[i][j] == 1) {
-//            return;
-//        }
-//
-//        for (int k = 0; k < 4; k++) {
-//            int nextI = i + DI[k];
-//            int nextJ = j + DJ[k];
-//
-//            if (nextI < 0 || nextJ < 0 || nextI > n - 1 || nextJ > m - 1) continue;
-//
-//            if (visited[nextI][nextJ]) continue;
-//
-//            if (map[nextI][nextJ] > 0) continue;
-//
-//            visited[nextI][nextJ] = true;
-//            count++;
-//            group[nextI][nextJ] = groupNum;
-//            dfs(nextI, nextJ, visited, n, m);
-//        }
-//    }
-
-
 }
