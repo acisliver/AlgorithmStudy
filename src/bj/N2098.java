@@ -1,8 +1,6 @@
 package bj;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
 
 // https://www.acmicpc.net/problem/2098
@@ -12,12 +10,12 @@ public class N2098 {
     private static int N;
     private static int[][] MAP;
     private static int[][] DP;
-    private static int INF = 2_000_000;
+    private static int INF = 16_000_000;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        MAP = new int[N][];
+        MAP = new int[N][N];
         DP = new int[N][1 << N];    // i: 현재 위치, j: 지금까지 방문한 도시 비트마스크
 
         for (int i = 0; i < N; i++) {
@@ -33,17 +31,19 @@ public class N2098 {
 
         // 0번 정점부터 시작
         System.out.println(tsp(0, 1));
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        bw.write(tsp(0, 1) + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
     private static int tsp(int cur, int visited) {
 
         // 탐색을 완료했다면
         if (visited == (1 << N) - 1) {
-            if (MAP[cur][0] == 0) {    // 시작정점으로 돌아오는 경우가 없는 경우
-                return INF;
-            }
-
-            return MAP[cur][0];        // 현재 위치에서 시작정점으로 돌아오는 거리
+            return MAP[cur][0] == 0 ? INF: MAP[cur][0];        // 현재 위치에서 시작정점으로 돌아오는 거리
         }
 
         // DP값이 존재하는 경우
